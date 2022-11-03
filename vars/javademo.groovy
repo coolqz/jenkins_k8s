@@ -23,9 +23,11 @@ def call(){
                 mountPath: /var/run/docker.sock
           volumes:
             - name: docker-cmd
-              hostPath: /usr/bin/docker
+              hostPath:
+                path: /usr/bin/docker
             - name: docker-sock
-              hostPath: /var/run/docker.sock
+              hostPath:
+                path: /var/run/docker.sock
         '''
             }
        }
