@@ -1,0 +1,5 @@
+FROM 192.168.100.203/library/tomcat:9.0.55
+
+ENV TZ=Asia/Shanghai
+COPY ./target/*.war /usr/local/tomcat/webapps/ROOT.war
+
