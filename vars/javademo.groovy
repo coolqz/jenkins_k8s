@@ -43,7 +43,7 @@ def call(){
         stages {
             stage('checkout_code'){
                 steps {
-                    containers(name: 'maven'){
+                    container(name: 'maven'){
                         checkout([
                             $class: 'GitSCM',
                             branches: [[name: '*/master']],
@@ -59,7 +59,7 @@ def call(){
 
             stage('maven_build'){
                 steps {
-                    containers(name: 'maven') {
+                    container(name: 'maven') {
                         sh """
                             mvn clean package -Dmaven.test.skip=true
                         """
@@ -69,7 +69,7 @@ def call(){
 
             stage('image_build'){
                 steps {
-                    containers(name: 'maven') {
+                    container(name: 'maven') {
                         script{
                             tools.writefile('dockerfile', requestdockerfile)
                             tools.harborlogin()
@@ -85,7 +85,7 @@ def call(){
 
             stage('service_deploy'){
                 steps {
-                    containers(name: 'maven') {
+                    container(name: 'maven') {
                         script{
                             tools.writefile('javademo.yaml', requestyaml)
                             tools.servicedeploy()
