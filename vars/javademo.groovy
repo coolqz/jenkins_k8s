@@ -15,7 +15,7 @@ def call(){
         spec:
           containers:
           - name: jnlp
-            image: "192.168.100.203/library/jenkins-jnlp-slave:maven"
+            image: "192.168.100.203/library/jnlp-slave-maven:3.8.3"
             volumeMounts:
               - name: docker-cmd
                 mountPath: /usr/bin/docker
@@ -42,8 +42,8 @@ def call(){
                         userRemoteConfigs: [[
                             credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
                             url: 'http://192.168.100.200/test/javademo.git'
-                            ]]
-                        ])
+                        ]]
+                    ])
                 }
             }
 
