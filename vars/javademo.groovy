@@ -15,12 +15,14 @@ def call(){
         spec:
           containers:
           - name: jnlp
-            image: "192.168.100.203/library/jnlp-slave-maven:3.8.3"
+            image: "192.168.100.203/library/jnlp-slave-maven:3.8.6"
             volumeMounts:
               - name: docker-cmd
                 mountPath: /usr/bin/docker
               - name: docker-sock
                 mountPath: /var/run/docker.sock
+              - name: maven-cache
+                mountPath: /root/.m2
           volumes:
             - name: docker-cmd
               hostPath:
@@ -28,6 +30,9 @@ def call(){
             - name: docker-sock
               hostPath:
                 path: /var/run/docker.sock
+            - name: maven-cache
+              hostPath:
+                path: /root/.m2
         '''
             }
        }
