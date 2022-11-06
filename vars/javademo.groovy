@@ -44,18 +44,24 @@ def call(){
             stage('checkout_code'){
                 steps {
                     container(name: 'maven'){
-                        sh """
-                            echo "checkout_code"
-                        """
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: '*/master']],
+                            extensions: [],
+                            userRemoteConfigs: [[
+                                credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
+                                url: 'http://192.168.100.200/test/javademo.git'
+                            ]]
+                        ])
                     }
                 }
             }
 
             stage('maven_build'){
                 steps {
-                    container(name: 'jnlp') {
+                    container(name: 'maven') {
                         sh """
-                            echo "maven_build"
+                            mvn clean package -Dmaven.test.skip=true
                         """
                     }
                 }
@@ -64,8 +70,14 @@ def call(){
             stage('image_build'){
                 steps {
                     container(name: 'maven') {
+                        script{
+                            tools.writefile('dockerfile', requestdockerfile)
+                            tools.harborlogin()
+                        }
                         sh """
-                            echo "image_build"
+                            docker build -t javademo:v1 .
+                            docker tag javademo:v1 192.168.100.203/test/javademo:v1
+                            docker push 192.168.100.203/test/javademo:v1
                         """
                     }
                 }
@@ -74,9 +86,10 @@ def call(){
             stage('service_deploy'){
                 steps {
                     container(name: 'maven') {
-                        sh """
-                            echo "service_deploy"
-                        """
+                        script{
+                            tools.writefile('javademo.yaml', requestyaml)
+                            tools.servicedeploy()
+                        }
                     }                   
                 }
             }
