@@ -18,7 +18,7 @@ def call(){
             image: "192.168.100.203/library/jenkins-jnlp-slave:jdk11"
 
           - name: maven
-            image: "192.168.100.203/library/maven:3.8.6"
+            image: "192.168.100.203/library/maven:3.8.6-jdk11"
             volumeMounts:
               - name: docker-cmd
                 mountPath: /usr/bin/docker
