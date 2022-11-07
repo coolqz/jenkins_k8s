@@ -54,15 +54,15 @@ def call(){
         }
 
         parameters {
-            listGitBranches branchFilter: '.*/.*/(.*)', 
+            listGitBranches branchFilter: 'refs/heads/(.*)', 
             credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
-            defaultValue: '', 
+            defaultValue: 'master', 
             description: '请选择分支：',
             listSize: '5', 
             name: 'FROM_BRANCH', 
             quickFilterEnabled: false, 
             remoteURL: 'http://192.168.100.200/test/javademo.git', 
-            selectedValue: 'NONE', 
+            selectedValue: 'DEFAULT', 
             sortMode: 'NONE', 
             tagFilter: '*', 
             type: 'PT_BRANCH'
