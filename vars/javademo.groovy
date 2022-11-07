@@ -73,7 +73,7 @@ def call(){
                 steps{
                     script{
                         wrap([$class: 'BuildUser']){
-                            currentBuild.description = "Trigger by ${BUILD_USER}"
+                            currentBuild.description = "Trigger by ${BUILD_USER}, branch: ${FROM_BRANCH}"
                         }
                     }
                 }
