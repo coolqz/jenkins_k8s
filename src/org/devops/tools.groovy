@@ -2,7 +2,7 @@ package org.devops
 
 //writefile
 def writefile(filename,content){                             
-  writefile encoding: 'UTF-8', file: "${filename}", text: "${content}" 
+  writeFile encoding: 'UTF-8', file: "${filename}", text: "${content}" 
 }
 
 def harborlogin(){
