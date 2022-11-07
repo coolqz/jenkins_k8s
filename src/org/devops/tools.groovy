@@ -14,7 +14,7 @@ def harborlogin(){
         )
     ]){
         sh """
-            docker login 192.168.100.203 -u $username -p $password
+            echo $password |docker login 192.168.100.203 -u $username --password-stdin
         """
     }
 }
