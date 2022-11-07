@@ -1,3 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: javademo-service
+  name: javademo-service
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: javademo-service
+  type: NodePort
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,3 +36,5 @@ spec:
         name: javademo
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+      - name: harborsecret

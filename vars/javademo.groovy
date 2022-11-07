@@ -78,8 +78,7 @@ def call(){
                             tools.harborlogin()
                         }
                         sh """
-                            docker build -t javademo:v1 .
-                            docker tag javademo:v1 192.168.100.203/test/javademo:v1
+                            docker build -t 192.168.100.203/test/javademo:v1 .
                             docker push 192.168.100.203/test/javademo:v1
                         """
                     }
