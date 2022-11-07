@@ -54,7 +54,7 @@ def call(){
         }
 
         parameters {
-            listGitBranches branchFilter: 'refs/heads/.*', 
+            listGitBranches branchFilter: '.*/.*/(.*)', 
             credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
             defaultValue: '', 
             description: '请选择分支：',
