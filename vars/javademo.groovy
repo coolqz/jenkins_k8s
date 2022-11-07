@@ -51,7 +51,8 @@ def call(){
             disableConcurrentBuilds()
             skipDefaultCheckout true
             retry(1)
-
+        }
+        
         parameters {
             listGitBranches branchFilter: '${FROM_BRANCH}', 
             credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
@@ -66,7 +67,6 @@ def call(){
             type: 'PT_BRANCH'
         }
 
-        }
         stages {
             stage('checkout_code'){
                 steps {
