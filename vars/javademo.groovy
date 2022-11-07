@@ -20,7 +20,7 @@ def call(){
           - name: maven
             image: "192.168.100.203/library/maven:3.8.6"
             command:
-              - cat
+              - "cat"
             tty: true
             volumeMounts:
               - name: docker-cmd
