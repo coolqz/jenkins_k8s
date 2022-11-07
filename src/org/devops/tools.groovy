@@ -3,7 +3,7 @@ package org.devops
 def checkoutcode(){
     checkout([
         $class: 'GitSCM',
-        branches: [[name: '*/master']],
+        branches: [[name: "${FROM_BRANCH}"]],
         extensions: [],
         userRemoteConfigs: [[
             credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
