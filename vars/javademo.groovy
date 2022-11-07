@@ -42,20 +42,38 @@ def call(){
         '''
             }
        }
- 
+
+        options {
+            buildDiscarder logRotator(
+                artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '3', numToKeepStr: '5'
+            )
+            disableResume()
+            disableConcurrentBuilds()
+            skipDefaultCheckout true
+            retry(1)
+
+        parameters {
+            listGitBranches branchFilter: '${FROM_BRANCH}', 
+            credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
+            defaultValue: '', 
+            listSize: '5', 
+            name: '${FROM_BRANCH}', 
+            quickFilterEnabled: false, 
+            remoteURL: 'http://192.168.100.200/test/javademo.git', 
+            selectedValue: 'NONE', 
+            sortMode: 'NONE', 
+            tagFilter: '*', 
+            type: 'PT_BRANCH'
+        }
+
+        }
         stages {
             stage('checkout_code'){
                 steps {
                     container(name: 'maven'){
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: '*/master']],
-                            extensions: [],
-                            userRemoteConfigs: [[
-                                credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
-                                url: 'http://192.168.100.200/test/javademo.git'
-                            ]]
-                        ])
+                        script {
+                            tools.checkoutcode()
+                        }
                     }
                 }
             }

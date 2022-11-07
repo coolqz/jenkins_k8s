@@ -1,10 +1,25 @@
 package org.devops
 
-//writefile
+def checkoutcode(){
+    checkout([
+        $class: 'GitSCM',
+        branches: [[name: '*/master']],
+        extensions: [],
+        userRemoteConfigs: [[
+            credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
+            url: 'http://192.168.100.200/test/javademo.git'
+        ]]
+    ])
+}
+
+
+
+//资源文件获取
 def writefile(filename,content){                             
   writeFile encoding: 'UTF-8', file: "${filename}", text: "${content}" 
 }
 
+//登录harbor
 def harborlogin(){
     withCredentials([
         usernamePassword(
@@ -19,6 +34,7 @@ def harborlogin(){
     }
 }
 
+//服务部署
 def servicedeploy(){
     kubeconfig(
         credentialsId: 'f2c47258-5493-428f-a102-c6ebaa012ff3', 
