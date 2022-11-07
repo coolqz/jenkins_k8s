@@ -46,3 +46,10 @@ def servicedeploy(){
         """
     }
 }
+
+//清除镜像和容器
+def cleancontainerandimage(){
+    sh """
+        docker image prune -af && docker container prune -f
+    """
+}

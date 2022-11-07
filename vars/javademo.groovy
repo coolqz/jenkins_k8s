@@ -73,7 +73,7 @@ def call(){
                 steps{
                     script{
                         wrap([$class: 'BuildUser']){
-                            currentBuild.description = "Trigger by ${BUILD_USER}, branch: ${FROM_BRANCH}"
+                            currentBuild.description = "Trigger by ${BUILD_USER}, Branch: ${FROM_BRANCH}"
                         }
                     }
                 }
@@ -123,6 +123,21 @@ def call(){
                         }
                     }                   
                 }
+            }
+        }
+
+        post {
+            always {
+                script {
+                    cleanWs cleanWhenFailure: false, deleteDirs: true
+                    tools.cleancontainerandimage()
+                }
+            }
+            success {
+                echo "发版成功，请查看服务运行情况"
+            }
+            failure {
+                echo "发版失败，请查看输出日志排查原因"
             }
         }
     }
