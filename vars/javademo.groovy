@@ -69,6 +69,16 @@ def call(){
         }
 
         stages {
+            stage('set-message'){
+                steps{
+                    script{
+                        wrap([$class: 'BuildUser']){
+                            currentBuild.description = "Trigger by ${BUILD_USER}"
+                        }
+                    }
+                }
+            }
+
             stage('checkout_code'){
                 steps {
                     container(name: 'maven'){
