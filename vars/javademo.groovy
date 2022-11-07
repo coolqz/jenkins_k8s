@@ -69,7 +69,7 @@ def call(){
         }
 
         stages {
-            stage('set-message'){
+            stage('set_message'){
                 steps{
                     script{
                         wrap([$class: 'BuildUser']){
