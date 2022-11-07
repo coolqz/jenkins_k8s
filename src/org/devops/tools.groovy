@@ -12,10 +12,11 @@ def harborlogin(){
             passwordVariable: 'password', 
             usernameVariable: 'username'
         )
-    ])
-    sh """
-        docker login 192.168.100.203 -u $username -p $password
-    """
+    ]){
+        sh """
+            docker login 192.168.100.203 -u $username -p $password
+        """
+    }
 }
 
 def servicedeploy(){
