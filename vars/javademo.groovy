@@ -24,7 +24,7 @@ def call(){
             tty: true
             volumeMounts:
               - name: docker-cmd
-                mountPath: /usr/bin/docker
+                mountPath: /usr/local/bin/docker
               - name: docker-sock
                 mountPath: /var/run/docker.sock
               - name: maven-cache
@@ -32,7 +32,7 @@ def call(){
           volumes:
             - name: docker-cmd
               hostPath:
-                path: /usr/bin/docker
+                path: /usr/local/bin/docker
             - name: docker-sock
               hostPath:
                 path: /var/run/docker.sock
