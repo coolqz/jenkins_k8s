@@ -52,13 +52,14 @@ def call(){
             skipDefaultCheckout true
             retry(1)
         }
-        
+
         parameters {
-            listGitBranches branchFilter: '${FROM_BRANCH}', 
+            listGitBranches branchFilter: '.*', 
             credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
             defaultValue: '', 
+            description: '请选择分支：',
             listSize: '5', 
-            name: '${FROM_BRANCH}', 
+            name: 'FROM_BRANCH', 
             quickFilterEnabled: false, 
             remoteURL: 'http://192.168.100.200/test/javademo.git', 
             selectedValue: 'NONE', 
