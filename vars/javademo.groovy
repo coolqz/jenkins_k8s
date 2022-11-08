@@ -66,7 +66,7 @@ def call(){
 
         parameters {
             listGitBranches branchFilter: 'refs/heads/(.*)', 
-            credentialsId: "${CODE_AUTH}", 
+            credentialsId: "46bc0911-8468-4171-b347-aaad153d5111", 
             defaultValue: 'master', 
             description: '请选择分支：',
             listSize: '5', 
