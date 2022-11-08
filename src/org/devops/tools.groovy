@@ -1,5 +1,5 @@
 package org.devops
-
+import GlobalVars
 def checkoutcode(CODE_AUTH,CODE_ADDR){
     checkout([
         $class: 'GitSCM',
