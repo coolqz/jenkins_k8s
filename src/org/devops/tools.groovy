@@ -6,7 +6,7 @@ def checkoutcode(){
         branches: [[name: "${FROM_BRANCH}"]],
         extensions: [],
         userRemoteConfigs: [[
-            credentialsId: "46bc0911-8468-4171-b347-aaad153d5111", 
+            credentialsId: "${CODE_AUTH}", 
             url: "${CODE_ADDR}"
         ]]
     ])
