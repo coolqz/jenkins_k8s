@@ -1,5 +1,5 @@
 def call(){
-    def GlobalVars = new org.devops.GlobalVars()
+    def GlobalVar = new org.devops.GlobalVars()
     def tools = new org.devops.tools()
     def requestdockerfile = libraryResource 'org/javademo/dockerfile/dockerfile'
     def requestyaml = libraryResource 'org/javademo/yaml/javademo.yaml'
