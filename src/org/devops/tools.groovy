@@ -1,12 +1,12 @@
 package org.devops
 
-def checkoutcode(CODE_AUTH,CODE_ADDR){
+def checkoutcode(){
     checkout([
         $class: 'GitSCM',
         branches: [[name: "${FROM_BRANCH}"]],
         extensions: [],
         userRemoteConfigs: [[
-            credentialsId: "${CODE_AUTH}", 
+            credentialsId: "46bc0911-8468-4171-b347-aaad153d5111", 
             url: "${CODE_ADDR}"
         ]]
     ])
