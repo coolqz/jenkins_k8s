@@ -20,7 +20,7 @@ def writefile(filename,content){
 }
 
 //登录harbor
-def harborlogin(HARBOR_AUTH){
+def harborlogin(){
     withCredentials([
         usernamePassword(
             credentialsId: "${HARBOR_AUTH}", 

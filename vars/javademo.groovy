@@ -1,16 +1,8 @@
 def call(){
+    def GlobalVars = new org.devops.GlobalVars()
     def tools = new org.devops.tools()
     def requestdockerfile = libraryResource 'org/javademo/dockerfile/dockerfile'
     def requestyaml = libraryResource 'org/javademo/yaml/javademo.yaml'
-
-    def PROJECT_NAME="test"
-    def SERVICE_NAME="javademo"
-    def HARBOR="192.168.100.203"
-    def HARBOR_AUTH="84d8aa3c-d320-4fa2-ba4d-910894080cf5"
-    def CODE_ADDR="http://192.168.100.200/test/javademo.git"
-    def CODE_AUTH="46bc0911-8468-4171-b347-aaad153d5111"
-    def K8S_ADDR="https://192.168.100.10:6443"
-    def K8S_AUTH="f2c47258-5493-428f-a102-c6ebaa012ff3"
 
     pipeline {
         agent {
