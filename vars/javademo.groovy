@@ -3,6 +3,13 @@ def call(){
     def requestdockerfile = libraryResource 'org/javademo/dockerfile/dockerfile'
     def requestyaml = libraryResource 'org/javademo/yaml/javademo.yaml'
 
+    String HARBOR="192.168.100.203"
+    String HARBOR_AUTH="84d8aa3c-d320-4fa2-ba4d-910894080cf5"
+    String CODE_ADDR="192.168.100.200/test/javademo.git"
+    String CODE_AUTH="46bc0911-8468-4171-b347-aaad153d5111"
+    String K8S_ADDR="https://192.168.100.10:6443"
+    String K8S_AUTH="f2c47258-5493-428f-a102-c6ebaa012ff3"
+
     pipeline {
         agent {
             kubernetes {
@@ -42,19 +49,6 @@ def call(){
         '''
             }
        }
-
-        environment {
-            PROJECT_NAME="test"
-            SERVICE_NAME="javademo"
-            HARBOR="192.168.100.203"
-            ARBOR_AUTH=credentials('84d8aa3c-d320-4fa2-ba4d-910894080cf5')
-            GITLAB="192.168.100.200"
-            CODE_ADDR="192.168.100.200/test/javademo.git"
-            CODE_AUTH=credentials('46bc0911-8468-4171-b347-aaad153d5111')
-            K8S_ADDR="https://192.168.100.10:6443"
-            K8S_AUTH=credentials('f2c47258-5493-428f-a102-c6ebaa012ff3')
-
-        }
 
         options {
             buildDiscarder logRotator(
