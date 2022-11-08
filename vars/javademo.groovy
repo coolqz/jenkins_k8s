@@ -43,6 +43,19 @@ def call(){
             }
        }
 
+        environment {
+            PROJECT_NAME="test"
+            SERVICE_NAME="${JOB_BASE_NAME}"
+            HARBOR="192.168.100.203"
+            HARBOR_AUTH="84d8aa3c-d320-4fa2-ba4d-910894080cf5"
+            GITLAB="192.168.100.200"
+            GIT_ADDR="${GITLAB}/${PROJECT_NAME}/${SERVICE_NAME}.git"
+            GIT_AUTH="46bc0911-8468-4171-b347-aaad153d5111"
+            K8S_ADDR="https://192.168.100.10:6443"
+            K8S_AUTH="f2c47258-5493-428f-a102-c6ebaa012ff3"
+
+        }
+
         options {
             buildDiscarder logRotator(
                 artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '3', numToKeepStr: '5'
@@ -55,13 +68,13 @@ def call(){
 
         parameters {
             listGitBranches branchFilter: 'refs/heads/(.*)', 
-            credentialsId: '46bc0911-8468-4171-b347-aaad153d5111', 
+            credentialsId: "${GIT_AUTH}", 
             defaultValue: 'master', 
             description: '请选择分支：',
             listSize: '5', 
             name: 'FROM_BRANCH', 
             quickFilterEnabled: false, 
-            remoteURL: 'http://192.168.100.200/test/javademo.git', 
+            remoteURL: "${GIT_URL}", 
             selectedValue: 'DEFAULT', 
             sortMode: 'NONE', 
             tagFilter: '*', 
@@ -107,8 +120,8 @@ def call(){
                             tools.harborlogin()
                         }
                         sh """
-                            docker build -t 192.168.100.203/test/javademo:v1 .
-                            docker push 192.168.100.203/test/javademo:v1
+                            docker build -t ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1 .
+                            docker push ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1
                         """
                     }
                 }
@@ -127,12 +140,6 @@ def call(){
         }
 
         post {
-            always {
-                script {
-                    cleanWs cleanWhenFailure: false, deleteDirs: true
-                    tools.cleancontainerandimage()
-                }
-            }
             success {
                 echo "发版成功，请查看服务运行情况"
             }
