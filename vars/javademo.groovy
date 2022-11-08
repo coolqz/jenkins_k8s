@@ -47,7 +47,6 @@ def call(){
             PROJECT_NAME="test"
             SERVICE_NAME="javademo"
             HARBOR="192.168.100.203"
-            HARBOR_AUTH=credentials('84d8aa3c-d320-4fa2-ba4d-910894080cf5')
             GITLAB="192.168.100.200"
             CODE_ADDR="192.168.100.200/test/javademo.git"
             CODE_AUTH=credentials('46bc0911-8468-4171-b347-aaad153d5111')
