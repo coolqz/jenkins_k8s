@@ -49,8 +49,8 @@ def call(){
             HARBOR="192.168.100.203"
             HARBOR_AUTH="84d8aa3c-d320-4fa2-ba4d-910894080cf5"
             GITLAB="192.168.100.200"
-            GIT_ADDR="${GITLAB}/${PROJECT_NAME}/${SERVICE_NAME}.git"
-            GIT_AUTH="46bc0911-8468-4171-b347-aaad153d5111"
+            CODE_ADDR="${GITLAB}/${PROJECT_NAME}/${SERVICE_NAME}.git"
+            CODE_AUTH="46bc0911-8468-4171-b347-aaad153d5111"
             K8S_ADDR="https://192.168.100.10:6443"
             K8S_AUTH="f2c47258-5493-428f-a102-c6ebaa012ff3"
 
@@ -68,13 +68,13 @@ def call(){
 
         parameters {
             listGitBranches branchFilter: 'refs/heads/(.*)', 
-            credentialsId: "${GIT_AUTH}", 
+            credentialsId: "${CODE_AUTH}", 
             defaultValue: 'master', 
             description: '请选择分支：',
             listSize: '5', 
             name: 'FROM_BRANCH', 
             quickFilterEnabled: false, 
-            remoteURL: "${GIT_URL}", 
+            remoteURL: "${CODE_ADDR}", 
             selectedValue: 'DEFAULT', 
             sortMode: 'NONE', 
             tagFilter: '*', 

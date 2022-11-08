@@ -6,8 +6,8 @@ def checkoutcode(){
         branches: [[name: "${FROM_BRANCH}"]],
         extensions: [],
         userRemoteConfigs: [[
-            credentialsId: "${GIT_AUTH}", 
-            url: "${GIT_ADDR}"
+            credentialsId: "${CODE_AUTH}", 
+            url: "${CODE_ADDR}"
         ]]
     ])
 }
