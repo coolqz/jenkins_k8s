@@ -139,16 +139,16 @@ def call(){
                     container(name: 'maven') {
                         script{
                             tools.writefile('javademo.yaml', requestyaml)
+                            kubeconfig(
+                                credentialsId: "${K8S_AUTH}", 
+                                serverUrl: "${K8S_ADDR}"
+                            ){
+                                sh """
+                                    kubectl apply -f javademo.yaml
+                                """
+                            }
                         }
-                        kubeconfig(
-                            credentialsId: "${K8S_AUTH}", 
-                            serverUrl: "${K8S_ADDR}"
-                        ){
-                            sh """
-                                kubectl apply -f javademo.yaml
-                            """
-                        }
-                    }                   
+                    }
                 }
             }
         }
