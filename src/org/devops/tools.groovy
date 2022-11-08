@@ -1,6 +1,6 @@
 package org.devops
 
-def checkoutcode(){
+def checkoutcode(CODE_AUTH,CODE_ADDR){
     checkout([
         $class: 'GitSCM',
         branches: [[name: "${FROM_BRANCH}"]],
