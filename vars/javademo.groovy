@@ -49,7 +49,6 @@ def call(){
             HARBOR="192.168.100.203"
             GITLAB="192.168.100.200"
             CODE_ADDR="192.168.100.200/test/javademo.git"
-            CODE_AUTH=credentials('46bc0911-8468-4171-b347-aaad153d5111')
             K8S_ADDR="https://192.168.100.10:6443"
             K8S_AUTH=credentials('f2c47258-5493-428f-a102-c6ebaa012ff3')
 
