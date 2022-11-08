@@ -89,15 +89,9 @@ def call(){
             stage('checkout_code'){
                 steps {
                     container(name: 'maven'){
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: "${FROM_BRANCH}"]],
-                            extensions: [],
-                            userRemoteConfigs: [[
-                                credentialsId: "${CODE_AUTH}", 
-                                url: "${CODE_ADDR}"
-                            ]]
-                        ])
+                        script {
+                            tools.checkoutcode()
+                        }
                     }
                 }
             }
@@ -117,19 +111,12 @@ def call(){
                     container(name: 'maven') {
                         script{
                             tools.writefile('dockerfile', requestdockerfile)
+                            tools.harborlogin()
                         }
-                        withCredentials([
-                            usernamePassword(
-                                credentialsId: "${HARBOR_AUTH}", 
-                                passwordVariable: 'password', 
-                                usernameVariable: 'username'
-                            )
-                        ]){
-                            sh """
-                                docker build -t ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1 .
-                                docker push ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1
-                            """
-                        }
+                        sh """
+                            docker build -t ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1 .
+                            docker push ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1
+                        """
                     }
                 }
             }
@@ -139,14 +126,7 @@ def call(){
                     container(name: 'maven') {
                         script{
                             tools.writefile('javademo.yaml', requestyaml)
-                        }
-                        kubeconfig(
-                            credentialsId: "${K8S_AUTH}", 
-                            serverUrl: "${K8S_ADDR}"
-                        ){
-                            sh """
-                                kubectl apply -f javademo.yaml
-                            """
+                            tools.servicedeploy()
                         }
                     }                   
                 }
