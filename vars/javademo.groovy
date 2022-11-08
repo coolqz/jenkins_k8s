@@ -45,11 +45,11 @@ def call(){
 
         environment {
             PROJECT_NAME="test"
-            SERVICE_NAME="${JOB_BASE_NAME}"
+            SERVICE_NAME="javademo"
             HARBOR="192.168.100.203"
             HARBOR_AUTH="84d8aa3c-d320-4fa2-ba4d-910894080cf5"
             GITLAB="192.168.100.200"
-            CODE_ADDR="${GITLAB}/${PROJECT_NAME}/${SERVICE_NAME}.git"
+            CODE_ADDR="192.168.100.200/test/javademo.git"
             CODE_AUTH="46bc0911-8468-4171-b347-aaad153d5111"
             K8S_ADDR="https://192.168.100.10:6443"
             K8S_AUTH="f2c47258-5493-428f-a102-c6ebaa012ff3"
