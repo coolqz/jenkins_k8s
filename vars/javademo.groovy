@@ -3,6 +3,8 @@ def call(){
     def requestdockerfile = libraryResource 'org/javademo/dockerfile/dockerfile'
     def requestyaml = libraryResource 'org/javademo/yaml/javademo.yaml'
 
+    def PROJECT_NAME="test"
+    def SERVICE_NAME="javademo"
     def HARBOR="192.168.100.203"
     def HARBOR_AUTH="84d8aa3c-d320-4fa2-ba4d-910894080cf5"
     def CODE_ADDR="http://192.168.100.200/test/javademo.git"
@@ -117,19 +119,12 @@ def call(){
                     container(name: 'maven') {
                         script{
                             tools.writefile('dockerfile', requestdockerfile)
+                            tools.harborlogin()
                         }
-                        withCredentials([
-                            usernamePassword(
-                                credentialsId: "${HARBOR_AUTH}", 
-                                passwordVariable: 'password', 
-                                usernameVariable: 'username'
-                            )
-                        ]){
-                            sh """
-                                docker build -t ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1 .
-                                docker push ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1
-                            """
-                        }
+                        sh """
+                            docker build -t ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1 .
+                            docker push ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1
+                        """
                     }
                 }
             }
@@ -139,14 +134,7 @@ def call(){
                     container(name: 'maven') {
                         script{
                             tools.writefile('javademo.yaml', requestyaml)
-                            kubeconfig(
-                                credentialsId: "${K8S_AUTH}", 
-                                serverUrl: "${K8S_ADDR}"
-                            ){
-                                sh """
-                                    kubectl apply -f javademo.yaml
-                                """
-                            }
+                            tools.servicedeploy()
                         }
                     }
                 }
