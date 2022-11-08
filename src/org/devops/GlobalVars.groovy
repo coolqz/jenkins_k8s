@@ -1,6 +1,6 @@
 package.org.devops
 
-class GlobalVar {
+class GlobalVars {
     static String PROJECT_NAME="test"
     static String SERVICE_NAME="javademo"
     static String HARBOR="192.168.100.203"
