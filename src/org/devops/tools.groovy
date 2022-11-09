@@ -13,7 +13,7 @@ def writefile(filename,content){
 }
 
 //登录harbor
-def harborlogin(){
+def harborlogin(Map map){
     withCredentials([
         usernamePassword(
             credentialsId: "${map.HARBOR_AUTH}", 
