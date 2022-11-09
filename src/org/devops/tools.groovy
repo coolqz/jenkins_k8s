@@ -16,13 +16,13 @@ def writefile(filename,content){
 def harborlogin(){
     withCredentials([
         usernamePassword(
-            credentialsId: "${HARBOR_AUTH}", 
+            credentialsId: "${map.HARBOR_AUTH}", 
             passwordVariable: 'password', 
             usernameVariable: 'username'
         )
     ]){
         sh """
-            echo $password |docker login ${HARBOR} -u $username --password-stdin
+            echo $password |docker login ${map.HARBOR} -u $username --password-stdin
         """
     }
 }
@@ -30,8 +30,8 @@ def harborlogin(){
 //服务部署
 def servicedeploy(){
     kubeconfig(
-        credentialsId: "${K8S_AUTH}", 
-        serverUrl: "${K8S_ADDR}"
+        credentialsId: "${map.K8S_AUTH}", 
+        serverUrl: "${map.K8S_ADDR}"
         ) 
     {
         sh """
