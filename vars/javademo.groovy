@@ -85,8 +85,8 @@ def call(Map map){
                             branches: [[name: "${FROM_BRANCH}"]],
                             extensions: [],
                             userRemoteConfigs: [[
-                                credentialsId: "${CODE_AUTH}", 
-                                url: "${CODE_ADDR}"
+                                credentialsId: "${map.CODE_AUTH}", 
+                                url: "${map.CODE_ADDR}"
                             ]]
                         ])
                     }
@@ -111,8 +111,8 @@ def call(Map map){
                             tools.harborlogin()
                         }
                         sh """
-                            docker build -t ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1 .
-                            docker push ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1
+                            docker build -t ${map.HARBOR}/${map.PROJECT_NAME}/${map.SERVICE_NAME}:v1 .
+                            docker push ${map.HARBOR}/${map.PROJECT_NAME}/${map.SERVICE_NAME}:v1
                         """
                     }
                 }
