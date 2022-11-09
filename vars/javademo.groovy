@@ -94,7 +94,7 @@ def call(Map map){
                         checkout([
                             $class: 'GitSCM', branches: [[name: "${FROM_BRANCH}"]], extensions: [],
                             userRemoteConfigs: [[
-                                credentialsId: "${CODE_AUTH}", url: "${GIT_ADDR}"
+                                credentialsId: "${GIT_AUTH}", url: "${GIT_ADDR}"
                             ]]
                         ])
                     }
