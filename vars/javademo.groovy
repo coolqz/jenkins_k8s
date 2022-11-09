@@ -1,4 +1,4 @@
-def call(MAP map){
+def call(Map map){
     def tools = new org.devops.tools()
     def requestdockerfile = libraryResource 'org/javademo/dockerfile/dockerfile'
     def requestyaml = libraryResource 'org/javademo/yaml/javademo.yaml'
