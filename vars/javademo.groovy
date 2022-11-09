@@ -47,7 +47,7 @@ def call(Map map){
             PROJECT_NAME = "${map.PROJECT_NAME}"
             SERVICE_NAME = "${map.SERVICE_NAME}"
             HARBOR = "${map.HARBOR}"
-            HARBOR_AUTH = ${map.HARBOR_AUTH}
+            HARBOR_AUTH = "${map.HARBOR_AUTH}"
             CODE_ADDR = "${map.CODE_ADDR}"
             CODE_AUTH = "${map.CODE_AUTH}"
             K8S_ADDR = "${map.K8S_ADDR}"
