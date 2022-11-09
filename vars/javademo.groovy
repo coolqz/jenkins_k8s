@@ -50,7 +50,7 @@ def call(Map map){
             HARBOR_AUTH = "${map.HARBOR_AUTH}"
             GIT = "${map.GIT}"
             GIT_ADDR = "http://${GIT}/${PROJECT_NAME}/${SERVICE_NAME}.git"
-            GIT_AUTH = "${map.CODE_AUTH}"
+            GIT_AUTH = "${map.GIT_AUTH}"
             K8S_ADDR = "${map.K8S_ADDR}"
             K8S_AUTH = "${map.K8S_AUTH}"
         }
