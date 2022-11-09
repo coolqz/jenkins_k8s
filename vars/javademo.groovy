@@ -42,6 +42,17 @@ def call(Map map){
         '''
             }
        }
+        
+        environment {
+            PROJECT_NAME = "${map.PROJECT_NAME}"
+            SERVICE_NAME = "${map.SERVICE_NAME}"
+            HARBOR = "${map.HARBOR}"
+            HARBOR_AUTH = ${map.HARBOR_AUTH}
+            CODE_ADDR = "${map.CODE_ADDR}"
+            CODE_AUTH = "${map.CODE_AUTH}"
+            K8S_ADDR = "${map.K8S_ADDR}"
+            K8S_AUTH = "${map.K8S_AUTH}"
+        }
 
         options {
             buildDiscarder logRotator(
@@ -83,7 +94,7 @@ def call(Map map){
                         checkout([
                             $class: 'GitSCM', branches: [[name: "${FROM_BRANCH}"]], extensions: [],
                             userRemoteConfigs: [[
-                                credentialsId: "${map.CODE_AUTH}", url: "${map.CODE_ADDR}"
+                                credentialsId: "${CODE_AUTH}", url: "${CODE_ADDR}"
                             ]]
                         ])
                     }
@@ -108,15 +119,15 @@ def call(Map map){
                         }
                         withCredentials([
                             usernamePassword(
-                                credentialsId: "${map.HARBOR_AUTH}",
+                                credentialsId: "${HARBOR_AUTH}",
                                 passwordVariable: 'password',
                                 usernameVariable: 'username')
                         ])
                         {
                             sh """
-                                docker login ${map.HARBOR} -u $username -p $password
-                                docker build -t ${map.HARBOR}/${map.PROJECT_NAME}/${map.SERVICE_NAME}:v1 .
-                                docker push ${map.HARBOR}/${map.PROJECT_NAME}/${map.SERVICE_NAME}:v1
+                                docker login ${HARBOR} -u $username -p $password
+                                docker build -t ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1 .
+                                docker push ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1
                             """
                         }
                     }
@@ -129,8 +140,8 @@ def call(Map map){
                         script{
                             tools.writefile('javademo.yaml', requestyaml)
                             kubeconfig(
-                                credentialsId: "${map.K8S_AUTH}",
-                                serverUrl: "${map.K8S_ADDR}")
+                                credentialsId: "${K8S_AUTH}",
+                                serverUrl: "${K8S_ADDR}")
                             {
                                 sh """
                                     kubectl apply -f javademo.yaml
