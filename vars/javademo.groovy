@@ -48,8 +48,8 @@ def call(Map map){
             SERVICE_NAME = "${map.SERVICE_NAME}"
             HARBOR = "${map.HARBOR}"
             HARBOR_AUTH = "${map.HARBOR_AUTH}"
-            CODE_ADDR = "${map.CODE_ADDR}"
-            CODE_AUTH = "${map.CODE_AUTH}"
+            GIT_ADDR = "http://${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}.git"
+            GIT_AUTH = "${map.CODE_AUTH}"
             K8S_ADDR = "${map.K8S_ADDR}"
             K8S_AUTH = "${map.K8S_AUTH}"
         }
@@ -94,7 +94,7 @@ def call(Map map){
                         checkout([
                             $class: 'GitSCM', branches: [[name: "${FROM_BRANCH}"]], extensions: [],
                             userRemoteConfigs: [[
-                                credentialsId: "${CODE_AUTH}", url: "${CODE_ADDR}"
+                                credentialsId: "${CODE_AUTH}", url: "${GIT_ADDR}"
                             ]]
                         ])
                     }
