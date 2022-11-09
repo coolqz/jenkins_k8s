@@ -1,7 +1,7 @@
 def call(Map map){
     def tools = new org.devops.tools()
-    def requestdockerfile = libraryResource 'org/javademo/dockerfile/dockerfile'
-    def requestyaml = libraryResource 'org/javademo/yaml/javademo.yaml'
+    def requestdockerfile = libraryResource 'org/test/dockerfile/dockerfile'
+    def requestyaml = libraryResource 'org/test/yaml/service.yaml'
 
     pipeline {
         agent {
@@ -53,6 +53,7 @@ def call(Map map){
             GIT_AUTH = "${map.GIT_AUTH}"
             K8S_ADDR = "${map.K8S_ADDR}"
             K8S_AUTH = "${map.K8S_AUTH}"
+            IMAGE_NAME = "${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:${DEPLOY_ENV}"
         }
 
         options {
@@ -139,17 +140,51 @@ def call(Map map){
             stage('service_deploy'){
                 steps {
                     container(name: 'maven') {
-
-                        script{
-                            tools.writefile('javademo.yaml', requestyaml)
-                            kubeconfig(
-                                credentialsId: "${K8S_AUTH}",
-                                serverUrl: "${K8S_ADDR}")
-                            {
-                                sh """
-                                    kubectl apply -f javademo.yaml
-                                """
-                            }
+                        script { 
+                            switch("${DEPLOY_ENV}") {
+                                case "dev":
+                                    tools.writefile('service.yaml', requestyaml)
+                                    kubeconfig(
+                                        credentialsId: "${K8S_AUTH}",
+                                        serverUrl: "${K8S_ADDR}")
+                                    {
+                                        sh """
+                                            sed -i s/\$SERVICE_NAME/${SERVICE_NAME}/g service.yaml
+                                            sed -i s/\$NAMESPACE/dev/g service.yaml
+                                            sed -i s/\$IMAGE_NAME/${IMAGE_NAME}/g service.yaml
+                                            kubectl apply -f service.yaml
+                                        """
+                                    }
+                                    break;
+                                case "test":
+                                    tools.writefile('service.yaml', requestyaml)
+                                    kubeconfig(
+                                        credentialsId: "${K8S_AUTH}",
+                                        serverUrl: "${K8S_ADDR}")
+                                    {
+                                        sh """
+                                            sed -i s/\$SERVICE_NAME/${SERVICE_NAME}/g service.yaml
+                                            sed -i s/\$NAMESPACE/test/g service.yaml
+                                            sed -i s/\$IMAGE_NAME/${IMAGE_NAME}/g service.yaml
+                                            kubectl apply -f service.yaml
+                                        """
+                                    }
+                                    break;
+                                case "uat":
+                                    tools.writefile('service.yaml', requestyaml)
+                                    kubeconfig(
+                                        credentialsId: "${K8S_AUTH}",
+                                        serverUrl: "${K8S_ADDR}")
+                                    {
+                                        sh """
+                                            sed -i s/\$SERVICE_NAME/${SERVICE_NAME}/g service.yaml
+                                            sed -i s/\$NAMESPACE/uat/g service.yaml
+                                            sed -i s/\$IMAGE_NAME/${IMAGE_NAME}/g service.yaml
+                                            kubectl apply -f service.yaml
+                                        """
+                                    }
+                                    break;
+                            }                                  
                         }
                     }
                 }

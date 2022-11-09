@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: javademo
-  name: javademo-service
-  namespace: default
+    app: $SERVICE_NAME
+  name: $SERVICE_NMAE-service
+  namespace: $NAMESPACE
 spec:
   ports:
   - name: 8080-8080
@@ -12,7 +12,7 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: javademo
+    app: $SERVICE_NAME
   type: NodePort
 
 ---
@@ -20,23 +20,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: javademo
-  name: javademo
-  namespace: default
+    app: $SERVICE_NAME
+  name: $SERVICE_NAME
+  namespace: $NAMESPACE
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: javademo
+      app: $SERVICE_NAME
   template:
     metadata:
       labels:
-        app: javademo
+        app: $SERVICE_NAME
     spec:
       containers:
-      - image: 192.168.100.203/test/javademo:v1
+      - image: $IMAGE_NAME
         imagePullPolicy: IfNotPresent
-        name: javademo
+        name: $SERVICE_NAME
         ports:
         - containerPort: 8080
         resources:
