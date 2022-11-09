@@ -128,8 +128,8 @@ def call(Map map){
                         {
                             sh """
                                 docker login ${HARBOR} -u $username -p $password
-                                docker build -t ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1 .
-                                docker push ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:v1
+                                docker build -t ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:${DEPLOY_ENV} .
+                                docker push ${HARBOR}/${PROJECT_NAME}/${SERVICE_NAME}:${DEPLOY_ENV}
                             """
                         }
                     }
@@ -139,6 +139,7 @@ def call(Map map){
             stage('service_deploy'){
                 steps {
                     container(name: 'maven') {
+
                         script{
                             tools.writefile('javademo.yaml', requestyaml)
                             kubeconfig(
