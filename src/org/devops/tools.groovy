@@ -1,18 +1,11 @@
 package org.devops
-import GlobalVars
-def checkoutcode(CODE_AUTH,CODE_ADDR){
-    checkout([
-        $class: 'GitSCM',
-        branches: [[name: "${FROM_BRANCH}"]],
-        extensions: [],
-        userRemoteConfigs: [[
-            credentialsId: "${CODE_AUTH}", 
-            url: "${CODE_ADDR}"
-        ]]
-    ])
+
+//获取构建信息
+def getbuildmsg(){
+    wrap([$class: 'BuildUser']){
+        currentBuild.description = "Trigger by ${BUILD_USER}, Branch: ${FROM_BRANCH}"
+    }
 }
-
-
 
 //资源文件获取
 def writefile(filename,content){                             

@@ -72,9 +72,7 @@ def call(){
             stage('set_message'){
                 steps{
                     script{
-                        wrap([$class: 'BuildUser']){
-                            currentBuild.description = "Trigger by ${BUILD_USER}, Branch: ${FROM_BRANCH}"
-                        }
+                        tools.getbuildmsg()
                     }
                 }
             }
