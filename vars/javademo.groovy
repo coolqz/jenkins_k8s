@@ -152,6 +152,7 @@ def call(Map map){
                                             sed -i s/\$SERVICE_NAME/${SERVICE_NAME}/g service.yaml
                                             sed -i s/\$NAMESPACE/dev/g service.yaml
                                             sed -i s/\$IMAGE_NAME/${IMAGE_NAME}/g service.yaml
+                                            sed -i s/\$DEPLOY_ENV/${DEPLOY_ENV}/g service.yaml
                                             kubectl apply -f service.yaml
                                         """
                                     }
@@ -166,6 +167,7 @@ def call(Map map){
                                             sed -i s/\$SERVICE_NAME/${SERVICE_NAME}/g service.yaml
                                             sed -i s/\$NAMESPACE/test/g service.yaml
                                             sed -i s/\$IMAGE_NAME/${IMAGE_NAME}/g service.yaml
+                                            sed -i s/\$DEPLOY_ENV/${DEPLOY_ENV}/g service.yaml
                                             kubectl apply -f service.yaml
                                         """
                                     }
@@ -180,6 +182,7 @@ def call(Map map){
                                             sed -i s/\$SERVICE_NAME/${SERVICE_NAME}/g service.yaml
                                             sed -i s/\$NAMESPACE/uat/g service.yaml
                                             sed -i s/\$IMAGE_NAME/${IMAGE_NAME}/g service.yaml
+                                            sed -i s/\$DEPLOY_ENV/${DEPLOY_ENV}/g service.yaml
                                             kubectl apply -f service.yaml
                                         """
                                     }
