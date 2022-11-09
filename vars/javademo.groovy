@@ -67,7 +67,7 @@ def call(Map map){
 
         parameters {
             listGitBranches branchFilter: 'refs/heads/(.*)', 
-            credentialsId: "${GIT_AUTH}", 
+            credentialsId: "46bc0911-8468-4171-b347-aaad153d5111", 
             defaultValue: 'master', 
             description: '请选择分支：',
             listSize: '5', 
@@ -78,6 +78,7 @@ def call(Map map){
             sortMode: 'NONE', 
             tagFilter: '*', 
             type: 'PT_BRANCH'
+            choice choices: ['dev', 'test', 'uat'], description: '请选择部署的环境：', name: 'DeployEnv'
         }
 
         stages {
