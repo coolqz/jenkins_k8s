@@ -69,7 +69,7 @@ def call(Map map){
         }
 
         stages {
-            stage('set_message'){
+            stage('get_message'){
                 steps{
                     script{
                         tools.getbuildmsg()
@@ -81,12 +81,9 @@ def call(Map map){
                 steps {
                     container(name: 'maven'){
                         checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: "${FROM_BRANCH}"]],
-                            extensions: [],
+                            $class: 'GitSCM', branches: [[name: "${FROM_BRANCH}"]], extensions: [],
                             userRemoteConfigs: [[
-                                credentialsId: "${map.CODE_AUTH}", 
-                                url: "${map.CODE_ADDR}"
+                                credentialsId: "${map.CODE_AUTH}", url: "${map.CODE_ADDR}"
                             ]]
                         ])
                     }
@@ -108,12 +105,20 @@ def call(Map map){
                     container(name: 'maven') {
                         script{
                             tools.writefile('dockerfile', requestdockerfile)
-                            tools.harborlogin()
                         }
-                        sh """
-                            docker build -t ${map.HARBOR}/${map.PROJECT_NAME}/${map.SERVICE_NAME}:v1 .
-                            docker push ${map.HARBOR}/${map.PROJECT_NAME}/${map.SERVICE_NAME}:v1
-                        """
+                        withCredentials([
+                            usernamePassword(
+                                credentialsId: "${map.HARBOR_AUTH}",
+                                passwordVariable: 'password',
+                                usernameVariable: 'username')
+                        ])
+                        {
+                            sh """
+                                docker login ${map.HARBOR} -u $username -p $password
+                                docker build -t ${map.HARBOR}/${map.PROJECT_NAME}/${map.SERVICE_NAME}:v1 .
+                                docker push ${map.HARBOR}/${map.PROJECT_NAME}/${map.SERVICE_NAME}:v1
+                            """
+                        }
                     }
                 }
             }
@@ -123,7 +128,14 @@ def call(Map map){
                     container(name: 'maven') {
                         script{
                             tools.writefile('javademo.yaml', requestyaml)
-                            tools.servicedeploy()
+                            kubeconfig(
+                                credentialsId: "${map.K8S_AUTH}",
+                                serverUrl: "${map.K8S_ADDR}")
+                            {
+                                sh """
+                                    kubectl apply -f javademo.yaml
+                                """
+                            }
                         }
                     }
                 }

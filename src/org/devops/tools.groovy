@@ -12,30 +12,4 @@ def writefile(filename,content){
   writeFile encoding: 'UTF-8', file: "${filename}", text: "${content}" 
 }
 
-//登录harbor
-def harborlogin(Map map){
-    withCredentials([
-        usernamePassword(
-            credentialsId: "${map.HARBOR_AUTH}", 
-            passwordVariable: 'password', 
-            usernameVariable: 'username'
-        )
-    ]){
-        sh """
-            echo $password |docker login ${map.HARBOR} -u $username --password-stdin
-        """
-    }
-}
 
-//服务部署
-def servicedeploy(){
-    kubeconfig(
-        credentialsId: "${map.K8S_AUTH}", 
-        serverUrl: "${map.K8S_ADDR}"
-        ) 
-    {
-        sh """
-            kubectl apply -f javademo.yaml
-        """
-    }
-}
