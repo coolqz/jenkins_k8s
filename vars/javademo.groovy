@@ -15,10 +15,10 @@ def call(Map map){
         spec:
           containers:
           - name: jnlp
-            image: "${HARBOR}/library/jenkins-jnlp-slave:jdk11"
+            image: "${map.HARBOR}/library/jenkins-jnlp-slave:jdk11"
 
           - name: maven
-            image: "${HARBOR}/library/maven:3.8.6"
+            image: "${map.HARBOR}/library/maven:3.8.6"
             command:
               - "cat"
             tty: true
