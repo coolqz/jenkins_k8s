@@ -81,7 +81,7 @@ def call(Map map){
             sortMode: 'NONE', 
             tagFilter: '*', 
             type: 'PT_BRANCH'
-            choice choices: ['dev', 'test', 'master'], description: '请选择部署的环境：', name: 'DEPLOY_ENV'
+            choice choices: ['dev', 'test', 'uat'], description: '请选择部署的环境：', name: 'DEPLOY_ENV'
         }
 
         stages {
