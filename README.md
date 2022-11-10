@@ -10,7 +10,7 @@
 
 ## 1.1.流程图
 
-![image-20221110163311268](C:\Users\18820\AppData\Roaming\Typora\typora-user-images\image-20221110163311268.png)
+![image-20221110163311268](https://github.com/coolqz/jenkins_k8s/blob/main/readme/image-20221110163311268.png)
 
 ## 1.2.组件说明
 
