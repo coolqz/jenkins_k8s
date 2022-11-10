@@ -20,25 +20,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: $SERVICE_NAME
-  name: $SERVICE_NAME
-  namespace: $NAMESPACE
+    app: SERVICE_NAME
+  name: SERVICE_NAME
+  namespace: NAMESPACE
 spec:
   replicas: 2
   nodeSelector:
-    deployenv: $DEPLOY_ENV
+    deployenv: DEPLOY_ENV
   selector:
     matchLabels:
-      app: $SERVICE_NAME
+      app: SERVICE_NAME
   template:
     metadata:
       labels:
-        app: $SERVICE_NAME
+        app: SERVICE_NAME
     spec:
       containers:
-      - image: $IMAGE_NAME
+      - image: IMAGE_NAME
         imagePullPolicy: IfNotPresent
-        name: $SERVICE_NAME
+        name: SERVICE_NAME
         ports:
         - containerPort: 8080
         resources:
