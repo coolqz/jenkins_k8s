@@ -89,7 +89,7 @@ def call(Map map){
                         tools.getbuildmsg()
                         def BRANCH_NAME = FROM_BRANCH.split('-')[1]
                         if ("${BRANCH_NAME} != ${DEPLOY_ENV}") {
-                            exit
+                            throw new Exception("代码分支和部署环境不一致！！！，请选择代码对应的部署环境")
                         }
                     }
                 }
