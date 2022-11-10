@@ -47,6 +47,7 @@ COPY jenkins-agent /usr/bin/jenkins-agent
 
 #agent.jar可以在部署好的jenkins下载：http://jenkinsip:端口/jnlpJars/agent.jar
 #jenkins-agent可以在https://github.com/jenkinsci/docker-inbound-agent下载
+#注意：jenkins官方宣布Jenkins版本从2.357开始及后面版本，仅支持Java 11及以上版本
 
 #maven镜像
 FROM maven:3.8.6-openjdk-8-slim 
