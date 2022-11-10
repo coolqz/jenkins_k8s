@@ -79,7 +79,7 @@ def call(Map map){
             sortMode: 'NONE', 
             tagFilter: '*', 
             type: 'PT_BRANCH'
-            choice choices: ['dev', 'test', 'uat'], description: '请选择部署的环境：', name: 'DEPLOY_ENV'
+            choice choices: ['dev', 'test', 'master'], description: '请选择部署的环境：', name: 'DEPLOY_ENV'
         }
 
         stages {
@@ -87,6 +87,10 @@ def call(Map map){
                 steps{
                     script{
                         tools.getbuildmsg()
+                        def BRANCH_NAME = FROM_BRANCH.split('-')[1]
+                        if ("${BRANCH_NAME} != ${DEPLOY_ENV}") {
+                            break
+                        }
                     }
                 }
             }
