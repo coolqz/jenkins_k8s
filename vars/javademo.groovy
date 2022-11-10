@@ -13,6 +13,8 @@ def call(Map map){
         metadata:
             name: jenkins-slave
         spec:
+          nodeSelector:
+            node: build
           containers:
           - name: jnlp
             image: "${map.HARBOR}/library/jenkins-jnlp-slave:jdk11"
