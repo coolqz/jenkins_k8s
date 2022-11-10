@@ -89,7 +89,7 @@ def call(Map map){
                         tools.getbuildmsg()
                         def BRANCH_NAME = FROM_BRANCH.split('-')[1]
                         if ("${BRANCH_NAME} != ${DEPLOY_ENV}") {
-                            break
+                            exit
                         }
                     }
                 }
