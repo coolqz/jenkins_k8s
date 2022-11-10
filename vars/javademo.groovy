@@ -7,7 +7,7 @@ def call(Map map){
         agent {
             kubernetes {
                 label "jenkins-slave"
-                yaml '''
+                yaml """
         apiVersion: v1
         kind: Pod
         metadata:
@@ -15,10 +15,10 @@ def call(Map map){
         spec:
           containers:
           - name: jnlp
-            image: "192.168.100.203/library/jenkins-jnlp-slave:jdk11"
+            image: "${HARBOR}/library/jenkins-jnlp-slave:jdk11"
 
           - name: maven
-            image: "192.168.100.203/library/maven:3.8.6"
+            image: "${HARBOR}/library/maven:3.8.6"
             command:
               - "cat"
             tty: true
@@ -39,7 +39,7 @@ def call(Map map){
             - name: maven-cache
               hostPath:
                 path: /root/.m2
-        '''
+        """
             }
        }
         
