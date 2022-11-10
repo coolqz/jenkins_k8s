@@ -87,7 +87,7 @@ def call(Map map){
                 steps{
                     script{
                         tools.getbuildmsg()
-                        def BRANCH_NAME = FROM_BRANCH.split('-')[-1]
+                        def BRANCH_NAME = FROM_BRANCH.split('-')
                         sh """
                             echo ${BRANCH_NAME}
                         """
