@@ -84,9 +84,15 @@ def call(Map map){
 
         stages {
             stage('get_message'){
+                environment {
+                    BRANCH_NAME = FROM_BRANCH.split('-')[-1]
+                }
                 steps{
                     script{
                         tools.getbuildmsg()
+                        sh """
+                            echo ${BRANCH_NAME}
+                        """
                         def BRANCH_NAME = FROM_BRANCH.split('-')[-1]
                         if ("${BRANCH_NAME}" != "${DEPLOY_ENV}") {
                             throw new Exception("代码分支和部署环境不一致！！！，请选择代码对应的部署环境")
